@@ -1,0 +1,29 @@
+{
+  "name": "cowchat",
+  "version": "1.0.0",
+  "description": "A chat that uses cowsay to send you messages",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mariolamacchia/cowchat.git"
+  },
+  "keywords": [
+    "cow",
+    "cowsay",
+    "cowchat",
+    "socket.io",
+    "chat"
+  ],
+  "author": "Mario Lamacchia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mariolamacchia/cowchat/issues"
+  },
+  "homepage": "https://github.com/mariolamacchia/cowchat",
+  "dependencies": {
+    "socket.io-client": "^1.2.0"
+  }
+}

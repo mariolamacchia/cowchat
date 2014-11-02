@@ -1,12 +1,10 @@
 var send = require('./send');
-var forever = require('forever');
+var receive = require('./daemon');
 
 var command = process.argv[2];
 
 if (command === 'start') {
-
-} else if (command === 'stop') {
+  receive();
 } else if (command === 'send') {
+  send(process.argv[3]);
 }
-
-process.exit();

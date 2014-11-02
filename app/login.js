@@ -27,18 +27,16 @@ function validateInput(input) {
   return !!input.match(/^[a-z0-9A-Z]{6,24}$/);
 }
 
-function login() {
+function login(callback) {
   var id = messageId();
   var socket = io(settings.get('host'));
   socket.on('connect', function() {
     socket.on(id + ':success', function(session) {
       settings.set('session', session);
-      console.log('Logged');
-      process.exit();
+      callback();
     });
     socket.on(id + ':error', function(error) {
-      console.log(error);
-      process.exit();
+      callback(error);
     });
     socket.emit('login',
       {

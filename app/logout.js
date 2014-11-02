@@ -3,25 +3,23 @@ var io = require('socket.io-client'),
     messageId = require('./messageId'),
     socket = io(settings.get('host'));
 
-module.exports = function() {
+module.exports = function(callback) {
   var session = settings.get('session');
   if (!session) {
-    console.log("You are not logged");
-    process.exit();
+    callback('You are not logged');
   }
 
   var id = messageId();
 
   socket.on('connect', function() {
     socket.on(id + ':success', function() {
-      console.log('Logged out');
       settings.set('session', '');
-      process.exit();
+      callback();
     });
     socket.on(id + ':error', function(e) {
       console.log(e);
       settings.set('session', '');
-      process.exit();
+      callback(e);
     });
     socket.emit('logout', {id: id, content: settings.get('session')});
   });

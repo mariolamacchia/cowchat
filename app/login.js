@@ -1,7 +1,6 @@
-var socket = require('socket.io-client'),
+var io = require('socket.io-client'),
     settings = require('./settings'),
-    messageId = require('./messageId'),
-    io = socket(settings.get('host'));
+    messageId = require('./messageId');
 
 var username, password;
 
@@ -30,17 +29,18 @@ function validateInput(input) {
 
 function login() {
   var id = messageId();
-  io.on('connect', function() {
-    io.on(id + ':success', function(session) {
+  var socket = io(settings.get('host'));
+  socket.on('connect', function() {
+    socket.on(id + ':success', function(session) {
       settings.set('session', session);
       console.log('Logged');
       process.exit();
     });
-    io.on(id + ':error', function(error) {
+    socket.on(id + ':error', function(error) {
       console.log(error);
       process.exit();
     });
-    io.emit('login',
+    socket.emit('login',
       {
         id: id,
         content: {

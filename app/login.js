@@ -34,7 +34,7 @@ function login() {
     if (err)
       return callback(err);
     settings.set('session', data);
-    return callback(data);
+    return callback(null, data);
   });
 }
 

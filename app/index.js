@@ -5,11 +5,27 @@ var command = argv._[0];
 if (command === 'start') {
   require('./daemon')(argv);
 } else if (command === 'send') {
-  require('./send')(argv);
+  require('./send')(argv, function(err, data) {
+    if (err)
+      console.log(err);
+    else console.log(data);
+    process.exit();
+  });
 } else if (command === 'signup') {
-  require('./signup')(argv);
+  require('./signup')(argv, function(err, data) {
+    if (err)
+      console.log(err);
+    else
+      console.log('Signed');
+    process.exit();
+  });
 } else if (command === 'user') {
-  require('./user')(argv);
+  require('./user')(argv, function(err, data) {
+    if (err)
+      console.log(err);
+    else console.log(data);
+    process.exit();
+  });
 } else if (command === 'settings') {
   var settings = require('./settings');
   if (argv._.length == 2)

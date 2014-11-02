@@ -1,6 +1,4 @@
-var io = require('socket.io-client'),
-    settings = require('./settings'),
-    messageId = require('./messageId');
+var socket = require('./socket');
 
 function humanTest() {
   var numbers = ['zero', 'one', 'two', 'three', 'four', 'five', 'six',
@@ -18,6 +16,7 @@ function humanTest() {
 }
 
 var username, password, password2, name, email, cow, human, errors = 0, test;
+var callback;
 
 process.stdin.on('data', function(input) {
   input = input.toString().trim();
@@ -62,7 +61,7 @@ process.stdin.on('data', function(input) {
       signup();
     } else {
       if (errors > 2)
-        process.exit();
+        callback('Too many errors');
       errors ++;
       test = humanTest();
       console.log(test.text);
@@ -75,33 +74,19 @@ function validateInput(input) {
 }
 
 function signup() {
-  var id = messageId();
-  socket = io(settings.get('host'));
-  socket.on('connect', function() {
-    socket.on(id + ':success', function(session) {
-      settings.set('session', session);
-      console.log('Signed and logged');
-      process.exit();
-    });
-    socket.on(id + ':error', function(error) {
-      console.log(error);
-      process.exit();
-    });
-    socket.emit('signup',
-      {
-        id: id,
-        content: {
-          username: username,
-          password: password,
-          name: name,
-          email: email,
-          cow: cow
-        }
-      }
-    );
+  socket.send('signup', {
+    username: username,
+    password: password,
+    name: name,
+    email: email,
+    cow: cow
+  }, function(err) {
+    if (err) return console.log(err);
+    return callback();
   });
 }
 
-module.exports = function() {
+module.exports = function(argv, cb) {
+  callback = cb;
   console.log('Insert username');
 }

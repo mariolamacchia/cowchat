@@ -1,26 +1,24 @@
-var io = require('socket.io-client'),
-    exec = require('child_process').exec,
+var socket = require('./socket'),
     settings = require('./settings'),
-    messageId = require('./messageId'),
-    socket = io(settings.get('host'));
+    exec = require('child_process').exec;
 
-module.exports = function(argv) {
-  var id = messageId();
-  socket.on('connect', function() {
-    socket.on(id + ':error', function(e) {
-      console.log(e);
-      process.exit();
-    });
-    socket.on(id + ':success', function(d) {
-      exec('cowsay -f ' + d.cow + ' ' + d.username,
-        function(error, stdout, stderr) {
-          console.log(stdout);
-          process.exit();
-        }
-      );
-    });
-    if (argv._[1])
-      socket.emit('user', {id: id, content: argv._[1]});
-    else socket.emit('me', {id: id, content: settings.get('session')});
+module.exports = function(argv, callback) {
+  var key, content;
+  if (argv._[1]) {
+    content = argv._[1];
+    key = 'user';
+  } else {
+    content = settings.get('session');
+    key = 'me';
+  }
+
+  socket.send(key, content, function(err, data) {
+    if (err)
+      return callback(err)
+    exec('cowsay -f ' + data.cow + ' ' + data.username,
+      function(error, stdout, stderr) {
+        return callback(null, stdout);
+      }
+    );
   });
 }

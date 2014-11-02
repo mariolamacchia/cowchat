@@ -1,35 +1,17 @@
-var io = require('socket.io-client'),
-    settings = require('./settings'),
-    messageId = require('./messageId'),
-    socket = io(settings.get('host'));
+var socket = require('./socket'),
+    settings = require('./settings');
 
-module.exports = function(argv) {
+module.exports = function(argv, callback) {
   var session = settings.get('session');
-  if (!session) {
-    console.log('You must log in');
-    process.exit();
-  }
+  if (!session)
+    return callback('Not logged');
 
-  var id = messageId();
-
-  socket.on('connect', function() {
-    socket.on(id + ':error', function(data) {
-      console.log(data);
-      process.exit();
-    });
-    socket.on(id + ':success', function(data) {
-      console.log('Sent');
-      process.exit();
-    });
-    socket.emit('message',
-      {
-        id: id,
-        content: {
-          me: session,
-          to: argv._[1],
-          message: argv._[2]
-        }
-      }
-    );
+  socket.send('message', {
+    me: settings.get('session'),
+    to: argv._[1],
+    message: argv._[2],
+  }, function(err) {
+    if (err) return callback(err);
+    return callback();
   });
 }

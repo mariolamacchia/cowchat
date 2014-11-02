@@ -1,12 +1,35 @@
-var socket = require('socket.io-client')('http://localhost:3000');
+var io = require('socket.io-client'),
+    settings = require('./settings'),
+    messageId = require('./messageId'),
+    socket = io(settings.get('host'));
 
-var date = Date.now();
+module.exports = function(argv) {
+  var session = settings.get('session');
+  if (!session) {
+    console.log('You must log in');
+    process.exit();
+  }
 
-module.exports = function(content) {
+  var id = messageId();
+
   socket.on('connect', function() {
-    socket.on('message', function(data) {
-      if (data.date == date) process.exit();
+    socket.on(id + ':error', function(data) {
+      console.log(data);
+      process.exit();
     });
-    socket.emit('message', {date: date, content: content});
+    socket.on(id + ':success', function(data) {
+      console.log('Sent');
+      process.exit();
+    });
+    socket.emit('message',
+      {
+        id: id,
+        content: {
+          me: session,
+          to: argv._[1],
+          message: argv._[2]
+        }
+      }
+    );
   });
 }

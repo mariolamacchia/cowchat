@@ -10,6 +10,8 @@ if (command === 'start') {
   require('./signup')(argv);
 } else if (command === 'login') {
   require('./login')(argv);
+} else if (command === 'user') {
+  require('./user')(argv);
 } else if (command === 'logout') {
   require('./logout')(argv);
 } else if (command === 'settings') {

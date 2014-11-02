@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/mariolamacchia/cowchat",
   "dependencies": {
+    "forever": "^0.12.0",
     "socket.io-client": "^1.2.0"
   }
 }

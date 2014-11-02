@@ -8,12 +8,8 @@ if (command === 'start') {
   require('./send')(argv);
 } else if (command === 'signup') {
   require('./signup')(argv);
-} else if (command === 'login') {
-  require('./login')(argv);
 } else if (command === 'user') {
   require('./user')(argv);
-} else if (command === 'logout') {
-  require('./logout')(argv);
 } else if (command === 'settings') {
   var settings = require('./settings');
   if (argv._.length == 2)

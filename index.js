@@ -20,6 +20,6 @@ if (command === 'start') {
   logout(argv);
 } else if (command === 'settings') {
   if (argv._.length == 2)
-    console.log(settings.get(argv._[1]));
+    settings.get(argv._[1], function(e, d) {console.log(d)});
   else settings.set(argv._[1], argv._[2]);
 }

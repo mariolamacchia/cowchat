@@ -1,24 +1,19 @@
-var argv = require('optimist').argv,
-    send = require('./send'),
-    receive = require('./daemon'),
-    login = require('./login'),
-    logout = require('./logout'),
-    signup = require('./signup'),
-    settings = require('./settings');
+var argv = require('optimist').argv;
 
 var command = argv._[0];
 
 if (command === 'start') {
-  receive(argv);
+  require('./daemon')(argv);
 } else if (command === 'send') {
-  send(argv);
+  require('./send')(argv);
 } else if (command === 'signup') {
-  signup(argv);
+  require('./signup')(argv);
 } else if (command === 'login') {
-  login(argv);
+  require('./login')(argv);
 } else if (command === 'logout') {
-  logout(argv);
+  require('./logout')(argv);
 } else if (command === 'settings') {
+  var settings = require('./settings');
   if (argv._.length == 2)
     console.log(settings.get(argv._[1]));
   else settings.set(argv._[1], argv._[2]);

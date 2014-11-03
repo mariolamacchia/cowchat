@@ -31,6 +31,7 @@ module.exports = function(argv) {
 
     var session = settings.get('session');
     socket.socket.on('message', function(message) {
+      socket.socket.emit(message.id + ':received');
       console.log('message from ' + message.from);
       console.log(message.message);
     });

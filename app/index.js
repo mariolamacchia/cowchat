@@ -5,10 +5,10 @@ var command = argv._[0];
 if (command === 'start') {
   require('./daemon')(argv);
 } else if (command === 'send') {
-  require('./send')(argv, function(err, data) {
+  require('./send')(argv, function(err) {
     if (err)
       console.log(err);
-    else console.log(data);
+    else console.log('Sent');
     process.exit();
   });
 } else if (command === 'signup') {

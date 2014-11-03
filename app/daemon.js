@@ -1,8 +1,7 @@
 var exec = require('child_process').exec,
     socket = require('./socket'),
     settings = require('./settings'),
-    login = require('./login'),
-    logout = require('./logout');
+    login = require('./login');
 
 module.exports = function(argv) {
   // Login
@@ -15,19 +14,6 @@ module.exports = function(argv) {
     }
     console.log('\u001b[2J\u001b[0;0H');
     console.log('Logged');
-
-    // Listen on stdin for "logout"
-    process.stdin.on('data', function(input) {
-      input = input.toString().trim();
-      if (input == 'logout') {
-        logout(function(e) {
-          if (e)
-            console.log(e);
-          console.log('second');
-          process.exit();
-        });
-      }
-    });
 
     var alive = true;
     socket.socket.on('keep alive', function() {

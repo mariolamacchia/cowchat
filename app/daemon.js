@@ -1,16 +1,17 @@
-var io = require('socket.io-client'),
-    exec = require('child_process').exec,
+var exec = require('child_process').exec,
+    socket = require('./socket'),
     settings = require('./settings'),
     login = require('./login'),
     logout = require('./logout');
 
 module.exports = function(argv) {
-  
   // Login
   login(argv, function(e) {
+    console.log(e);
     if (e) {
       console.log(e);
-      process.exit();
+      console.log('first');
+      return process.exit();
     }
     console.log('\u001b[2J\u001b[0;0H');
     console.log('Logged');
@@ -22,26 +23,15 @@ module.exports = function(argv) {
         logout(function(e) {
           if (e)
             console.log(e);
+          console.log('second');
           process.exit();
         });
       }
     });
 
     var session = settings.get('session');
-    console.log(session);
-    var socket = io.connect(settings.get('host'));
-    console.log(socket);
-    socket.on('connect', function() {
-      socket.on(session, function(message) {
-        console.log('Message from ' + message.from.username);
-        exec('cowsay -f ' + message.from.cow + ' ' + message.content,
-          function(err, stdout, stderr) {
-            console.log(stdout);
-          }
-        );
-        socket.emit('message received', message.id);
-      });
-      console.log('asdasd');
+    socket.socket.on('message', function(message) {
+      console.log(message);
     });
   });
 }

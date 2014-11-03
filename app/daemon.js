@@ -29,6 +29,17 @@ module.exports = function(argv) {
       }
     });
 
+    var alive = true;
+    socket.socket.on('keep alive', function() {
+      alive = true;
+      socket.socket.emit('alive', settings.get('me'));
+    });
+    setInterval(function() {
+      if (alive) return alive = false;
+      console.log("Disconnected");
+      process.exit();
+    }, 10000);
+  
     var session = settings.get('session');
     socket.socket.on('message', function(message) {
       socket.socket.emit(message.id + ':received');

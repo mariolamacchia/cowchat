@@ -1,4 +1,4 @@
-var exec = require('child_process').exec,
+var cowsay = require('cowsay'),
     socket = require('./socket'),
     settings = require('./settings'),
     login = require('./login');
@@ -29,8 +29,20 @@ module.exports = function(argv) {
     var session = settings.get('session');
     socket.socket.on('message', function(message) {
       socket.socket.emit(message.id + ':received');
-      console.log('message from ' + message.from);
-      console.log(message.message);
+      console.log('message from ' + message.from.username);
+      // If cow is present on this pc, use it, otherwise use default
+      // I will use this method waiting to cowsay module to be updated
+      var fs = require('fs');
+      fs.readdir(__dirname + '/../node_modules/cowsay/cows', function(e, d) {
+        var cow = message.from.cow;
+
+        if (d.indexOf(cow + '.cow') == -1) cow = 'default';
+
+        console.log(cowsay.say({
+          f: cow,
+          text: message.message
+        }));
+      });
     });
   });
 }

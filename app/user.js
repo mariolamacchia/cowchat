@@ -1,6 +1,6 @@
-var socket = require('./socket'),
-    settings = require('./settings'),
-    exec = require('child_process').exec;
+var cowsay = require('cowsay'),
+    socket = require('./socket'),
+    settings = require('./settings');
 
 module.exports = function(argv, callback) {
   var key, content;
@@ -11,12 +11,20 @@ module.exports = function(argv, callback) {
   }
 
   socket.send('user', content, function(err, data) {
-    if (err)
-      return callback(err)
-    exec('cowsay -f ' + data.cow + ' ' + data.username,
-      function(error, stdout, stderr) {
-        return callback(null, stdout);
-      }
-    );
+    if (err) return callback(err);
+    
+    // If cow is present on this pc, use it, otherwise use default
+    // I will use this method waiting to cowsay module to be updated
+    var fs = require('fs');
+    fs.readdir(__dirname + '/../node_modules/cowsay/cows', function(e, d) {
+      var cow = data.cow;
+
+      if (d.indexOf(cow + '.cow') == -1) cow = 'default';
+
+      callback(null, cowsay.think({
+        f: cow,
+        text: 'I am ' + data.username
+      }));
+    });
   });
 }

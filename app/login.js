@@ -33,7 +33,7 @@ function login() {
   }, function(err, data) {
     if (err)
       return callback(err);
-    settings.set('session', data);
+    settings.set('me', data);
     return callback(null, data);
   });
 }

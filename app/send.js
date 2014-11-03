@@ -2,12 +2,12 @@ var socket = require('./socket'),
     settings = require('./settings');
 
 module.exports = function(argv, callback) {
-  var session = settings.get('session');
-  if (!session)
-    return callback('Not logged');
+  var me = settings.get('me');
+  if (!me.session) 
+    return console.log('Not Logged');
 
   socket.send('message', {
-    me: settings.get('session'),
+    me: me,
     to: argv._[1],
     message: argv._[2],
   }, function(err) {

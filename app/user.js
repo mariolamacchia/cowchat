@@ -6,13 +6,11 @@ module.exports = function(argv, callback) {
   var key, content;
   if (argv._[1]) {
     content = argv._[1];
-    key = 'user';
   } else {
-    content = settings.get('session');
-    key = 'me';
+    content = settings.get('me').username;
   }
 
-  socket.send(key, content, function(err, data) {
+  socket.send('user', content, function(err, data) {
     if (err)
       return callback(err)
     exec('cowsay -f ' + data.cow + ' ' + data.username,

@@ -2,7 +2,7 @@ var nconf = require('nconf');
 
 nconf
     .file(__dirname + '/config.json')
-    .defaults({host: 'http://localhost:3000'});
+    .defaults({host: 'https://cowchat.herokuapp.com'});
 
 module.exports = {
     get: function(k) {

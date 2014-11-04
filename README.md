@@ -4,6 +4,47 @@ CowChat
 CowChat is a simple chat working on terminal that uses a JavaScript version of
 Cowsay to bring messages to you.
 
+    Logged
+    message from user99
+     ___________
+    < Hi there! >
+     -----------
+            \   ^__^
+             \  (oo)\_______
+                (__)\       )\/\
+                    ||----w |
+                    ||     ||
+
+    message from tux123
+     __________________________________
+    < CowChat is the best chat EVER!!! >
+     ----------------------------------
+       \
+        \
+            .--.
+           |o_o |
+           |:_/ |
+          //   \ \
+         (|     | )
+        /'\_   _/`\
+        \___)=(___/
+
+    message from squirrel
+     _______________________________________________________
+    < You can use any "cow" that will bring your message... >
+     -------------------------------------------------------
+      \
+         \
+                      _ _
+           | \__/|  .~    ~.
+           /oo `./      .'
+          {o__,   \    {
+            / .  . )    \
+            `-` '-' \    }
+           .(   _(   )_.'
+          '---.~_ _ _|
+
+
 Server is running at
 [https://cowchat.herokuapp.com/](https://cowchat.herokuapp.com/).
 You can get server's code

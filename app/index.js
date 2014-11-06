@@ -5,7 +5,7 @@ var command = argv._[0];
 if (command === 'start') {
     require('./daemon')(argv);
 } else if (command === 'send') {
-    require('./send')(argv, function(err) {
+    require('./send')(argv._[1], argv._[2], function(err) {
         if (err) console.log(err);
         else console.log('Sent');
         process.exit();

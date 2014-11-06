@@ -1,6 +1,7 @@
 var cowsay = require('cowsay'),
     socket = require('./socket'),
     settings = require('./settings'),
+    send = require('./send'),
     login = require('./login');
 
 module.exports = function(argv) {
@@ -15,6 +16,22 @@ module.exports = function(argv) {
 
         console.log('\u001b[2J\u001b[0;0H');
         console.log('Logged');
+
+        process.stdin.on('data', function(input) {
+            var iArray = input.toString().split(' ');
+            var to = iArray.shift();
+            if (iArray.length) var message = iArray.join(' ');
+            else var message = ' ';
+
+            console.log(cowsay.say({
+                f: settings.get('me').cow,
+                text: message
+            }));
+
+            send(to, message, function(e) {
+                if (e) console.log(e);
+            });
+        });
 
         var alive = true;
         socket.socket.on('keep alive', function() {

@@ -1,6 +1,6 @@
 {
   "name": "cowchat",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A chat that uses cowsay to send you messages",
   "main": "index.js",
   "scripts": {
@@ -21,6 +21,9 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/mariolamacchia/cowchat/issues"
+  },
+  "bin": {
+    "cowchat": "./cowchat"
   },
   "homepage": "https://github.com/mariolamacchia/cowchat",
   "dependencies": {

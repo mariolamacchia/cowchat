@@ -68,9 +68,10 @@ To start listening for messages:
 
     cowchat start <username> <password>
 
-To send messages (you will need to have an open process listening):
+Now you will receive on this terminal all messages from other users. To send
+messages just type:
 
-    cowchat send <receiver_username> "<message>"
+    <receiver username> <message>
 
 Other
 -----

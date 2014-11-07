@@ -1,6 +1,6 @@
 {
   "name": "cowchat",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A chat that uses cowsay to send you messages",
   "main": "index.js",
   "scripts": {

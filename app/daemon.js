@@ -20,7 +20,7 @@ module.exports = function(argv) {
         process.stdin.on('data', function(input) {
             var iArray = input.toString().split(' ');
             var to = iArray.shift();
-            if (iArray.length) var message = iArray.join(' ');
+            if (iArray.length) var message = iArray.join(' ').trim();
             else var message = ' ';
 
             console.log(cowsay.say({

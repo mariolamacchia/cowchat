@@ -53,14 +53,9 @@ You can get server's code
 Install
 -------
 
-Clone the repository:
+Install with npm:
 
-    git clone https://github.com/mariolamacchia/cowchat
-
-Go into the repository directory and run the makefile:
-
-    cd cowchat
-    sudo make
+    npm install -g cowchat
 
 Signup
 

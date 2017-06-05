@@ -6,6 +6,7 @@ var io = require('socket.io-client'),
 module.exports = {
     socket: socket,
     send: function(key, value, callback) {
+        console.log(key, value)
         var id = messageId();
         socket.on(id + ':success', function(data) {
             callback(null, data);
@@ -13,6 +14,8 @@ module.exports = {
         socket.on(id + ':error', function(err) {
             callback(err);
         });
-        socket.emit(key, {id: id, content: value});
+        socket.emit(key, {id: id, content: value}, function(answer) {
+            cb(null, answer);
+        });
     }
 };

@@ -26,4 +26,13 @@ if (command === 'start') {
     var settings = require('./settings');
     if (argv._.length == 2) console.log(settings.get(argv._[1]));
     else settings.set(argv._[1], argv._[2]);
+} else if (command === 'ping') {
+    require('./ping')(function(err) {
+        if (err) {
+            console.log(err);
+            process.exit(1);
+        }
+        console.log('Pong!');
+        process.exit(0);
+    })
 }

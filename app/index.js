@@ -3,7 +3,6 @@ let command = argv._[0] || 'start';
 const availableCommands = ['help', 'send', 'settings', 'signup', 'start', 'ping', 'user'];
 
 if (!availableCommands.includes(command)) {
-  console.log(`${command} is an invalid command.`);
   command = 'help';
 }
 

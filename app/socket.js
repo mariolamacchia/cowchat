@@ -1,21 +1,3 @@
-var io = require('socket.io-client'),
-    settings = require('./settings'),
-    messageId = require('./messageId'),
-    socket = io(settings.get('host'));
-
-module.exports = {
-    socket: socket,
-    send: function(key, value, callback) {
-        console.log(key, value)
-        var id = messageId();
-        socket.on(id + ':success', function(data) {
-            callback(null, data);
-        });
-        socket.on(id + ':error', function(err) {
-            callback(err);
-        });
-        socket.emit(key, {id: id, content: value}, function(answer) {
-            cb(null, answer);
-        });
-    }
-};
+const io = require('socket.io-client');
+const settings = require('./settings');
+module.exports = io(settings.host);

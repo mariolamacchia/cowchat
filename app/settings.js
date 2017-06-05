@@ -1,18 +1,12 @@
-var nconf = require('nconf');
+let settings;
 
-nconf
-    .file(__dirname + '/config.json')
-    .defaults({
-        host: 'https://cowchat.herokuapp.com',
-        timeout: 3000,
-    });
-
-module.exports = {
-    get: function(k) {
-        return nconf.get(k);
-    },
-    set: function(k, v) {
-        nconf.set(k, v);
-        nconf.save();
-    }
+try {
+    settings = require('../settings.json');
+} catch (e) {
+    settings = {};
 }
+
+module.exports = Object.assign({
+    host: 'https://cowchat.herokuapp.com',
+    timeout: 3000,
+}, settings);
